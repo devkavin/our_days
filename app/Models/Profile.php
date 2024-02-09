@@ -13,4 +13,9 @@ class Profile extends Model
     {
         return $this->hasMany(Photo::class);
     }
+
+    public function spotify_playlists()
+    {
+        return $this->hasMany(SpotifyPlaylist::class);
+    }
 }

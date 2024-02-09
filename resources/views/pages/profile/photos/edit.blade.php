@@ -56,7 +56,8 @@
                                         data-photo-id="{{ $photo->id }}" data-photo-public="{{ $photo->is_public }}">
 
                                     <!-- Delete Photo Form -->
-                                    <form {{-- action="{{ route('profile.photos.destroy', ['profile' => $profile_details['id'], 'photo' => $photo->id]) }}" --}} action="{{ route('photos.destroy', $photo->id) }}"
+                                    <form
+                                        action="{{ route('profile.photos.destroy', ['profile' => $profile_details['id'], 'photo' => $photo->id]) }}"
                                         method="POST"
                                         onsubmit="return confirm('Are you sure you want to delete this photo?');">
                                         @csrf
@@ -77,18 +78,23 @@
     <div id="photoModal" class="modal">
         <span class="close">&times;</span>
         <img class="modal-content" id="fullSizeImage">
-        <form id="photoOptionsForm" method="POST" action="{{ route('photos.update', $photo->id) }}"
-            enctype="multipart/form-data">
-            <input type="hidden" name="is_public" value="{{ $photo->is_public ?? '' }}">
-            @csrf
-            @method('POST')
-            <div class="modal-options">
-                <label for="isPublicToggle">Make Photo Public</label>
-                <input type="checkbox" class="form-check-input" id="isPublicToggle" name="is_public"
-                    value="{{ $photo->is_public ?? '' }}">
-                <button type="submit" class="btn btn-success">Save Changes</button>
-            </div>
-        </form>
+        @php
+            // $photo = $photo ?? null;
+        @endphp
+        @if ($photos->isNotEmpty())
+            <form id="photoOptionsForm" method="POST" action="{{ route('photos.update', $photo->id) }}"
+                enctype="multipart/form-data">
+                <input type="hidden" name="is_public" value="{{ $photo->is_public ?? '' }}">
+                @csrf
+                @method('POST')
+                <div class="modal-options">
+                    <label for="isPublicToggle">Make Photo Public</label>
+                    <input type="checkbox" class="form-check-input" id="isPublicToggle" name="is_public"
+                        value="{{ $photo->is_public ?? '' }}">
+                    <button type="submit" class="btn btn-success">Save Changes</button>
+                </div>
+            </form>
+        @endif
     </div>
     {{-- comment on dev branch --}}
     <!-- Custom JavaScript for the Modal -->

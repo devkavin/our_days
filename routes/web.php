@@ -35,13 +35,13 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Route::resource('photos', PhotoController::class);
     Route::post('photos', [PhotoController::class, 'update'])->name('photos.update');
-    Route::delete('photos', [PhotoController::class, 'destroy'])->name('photos.destroy');
+    // Route::delete('photos', [PhotoController::class, 'destroy'])->name('photos.destroy');
 
     Route::resource('profile.photos', PhotoController::class);
     Route::get('load-photos', [PhotoController::class, 'loadPhotos']);
     Route::post('profile.photos', [PhotoController::class, 'store']);
     Route::get('profile.photos', [PhotoController::class, 'update']);
-    // Route::delete('profile.photos', [PhotoController::class, 'destroy'])->name('profile.photos.destroy');
+    Route::delete('profile.photos', [PhotoController::class, 'destroy']);
 
     // /home route
     // Route::get('home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

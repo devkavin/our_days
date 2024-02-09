@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Photo;
+use App\Models\SpotifyPlaylist;
 
 class LandingController extends Controller
 {
@@ -11,9 +12,11 @@ class LandingController extends Controller
     {
 
         $photos = Photo::getPublicPhotos();
-        // dd($photos);
+        $spotify_playlists = SpotifyPlaylist::getSpotifyPlaylists();
+        // dd($spotify_playlists);
         return view('landing')->with([
             'photos' => $photos,
+            'spotify_playlists' => $spotify_playlists,
         ]);
     }
 

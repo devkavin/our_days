@@ -88,15 +88,30 @@ class PhotoController extends Controller
         ]);
     }
 
-    public function destroy($id)
+    public function destroy($profile, $id)
     {
-        $photo = Photo::find($id);
-        dd($photo, 'destroy');
-        $photo->delete();
+        try {
+            $photo = Photo::find($id);
+            // dd($profile, $id, $photo, 'destroy');
+            // get photo path and delete it from public folder
+            $photoPath = public_path($photo->url);
+            // remove base url from photoPath
+            $photoPath = str_replace(config('app.url'), '', $photoPath);
+            if (file_exists($photoPath)) {
+                unlink($photoPath);
+                $photo->delete();
+            } else {
+                dd('file does not exist', 'destroy', $photoPath);
+            }
 
-        return redirect()->back()->with([
-            'message' => 'Photo deleted successfully',
-            'alert-type' => 'success'
-        ]);
+            return redirect()->back()->with([
+                'message' => 'Photo deleted successfully',
+                'alert-type' => 'success'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 }
