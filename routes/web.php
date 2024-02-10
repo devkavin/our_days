@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Profile\ProfileController;
 use App\Http\Controllers\Profile\NavbarController;
 use App\Http\Controllers\Profile\PhotoController;
+use Illuminate\Support\Facades\Artisan;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,4 +50,11 @@ Route::group(['middleware' => 'auth'], function () {
     // Route::res('landing', [App\Http\Controllers\HomeController::class, 'index']);
     // Route::resource('landing', App\Http\Controllers\LandingController::class);
     // Route::get('landing', [App\Http\Controllers\LandingController::class, 'index']);
+});
+
+Route::get('/run-migration', function () {
+    Artisan::call('optimize:clear');
+    Artisan::call('migrate:fresh --seed');
+
+    return 'Migration complete';
 });
