@@ -56,8 +56,5 @@ Route::get('/run-migration', function () {
     Artisan::call('optimize:clear');
     Artisan::call('migrate:refresh --seed');
 
-    // npm run dev command
-    exec('npm run dev');
-
     return 'Migration complete';
 });
